@@ -26,8 +26,17 @@
     <!-- OPTIONAL: The :focus-visible polyfill removes the focus ring for some input types -->
     <script src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
 
+    <style>
+      /* CSS code goes here */
+    </style>
+
   </head> 
 <body>
+  <div class="wrapper">
+    <button id="previous-model"><</button>
+    <button id="next-model">></button>
+  </div>
+
   <div id="card">
     <model-viewer src="./3Dmodel/AutoAR.glb"
                   ios-src="./3Dmodel/AutoAR.usdz"
@@ -50,6 +59,33 @@
     src="https://unpkg.com/@google/model-viewer@v0.9.0/dist/model-viewer-legacy.js">
   </script>
 
+  <script>
+    var modelsGlb = [
+      "./3Dmodel/AutoAR.glb",
+      "./3Dmodel/AutoAR2.glb" // Cesta k vášmu druhému modelu
+    ];
+
+    var modelsUsdz = [
+      "./3Dmodel/AutoAR.usdz",
+      "./3Dmodel/AutoAR2.usdz" // Cesta k vášmu druhému modelu
+    ];
+
+    var currentModelIndex = 0;
+
+    document.getElementById('previous-model').addEventListener('click', function() {
+      currentModelIndex = (currentModelIndex - 1 + modelsGlb.length) % modelsGlb.length;
+      var viewer = document.querySelector('model-viewer');
+      viewer.src = modelsGlb[currentModelIndex];
+      viewer.iosSrc = modelsUsdz[currentModelIndex];
+    });
+
+    document.getElementById('next-model').addEventListener('click', function() {
+      currentModelIndex = (currentModelIndex + 1) % modelsGlb.length;
+      var viewer = document.querySelector('model-viewer');
+      viewer.src = modelsGlb[currentModelIndex];
+      viewer.iosSrc = modelsUsdz[currentModelIndex];
+    });
+  </script>
 
 </body>
 </html>
